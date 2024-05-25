@@ -8,7 +8,6 @@ import {
   uppercaseRegex,
   websiteRegex,
 } from "../constants";
-import bcrypt from "bcryptjs";
 
 export const validatePassword = (password) => {
   const lowercaseValid = lowercaseRegex.test(password);
@@ -169,9 +168,9 @@ export const handleDragLeave = (setIsDragging) => (e) => {
   setIsDragging(false);
 };
 
-export const comparePasswords = async (inputPassword, hashedPassword) => {
-  return await bcrypt.compare(inputPassword, hashedPassword);
-};
+// export const comparePasswords = async (inputPassword, hashedPassword) => {
+//   return await bcrypt.compare(inputPassword, hashedPassword);
+// };
 export const isTokenExpired = (expiration) => {
   if (!expiration) {
     return false;
