@@ -1,14 +1,11 @@
 import React from 'react';
 import { Gif } from '../utils/images';
+import { CircularProgress } from '@mui/material';
 
 const LoaderGif = () => {
 
     return (
-        <div className="loader-wrapper">
-            <div className="loader-container">
-                <p style={{color: "black"}}>loaing...</p>
-            </div>
-        </div>
+        <CircularProgress size={20}/>
     )
 }
 

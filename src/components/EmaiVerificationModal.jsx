@@ -1,27 +1,34 @@
-import React from "react";
-import { Modal } from "react-bootstrap";
+import React from 'react';
+import { Dialog, DialogTitle, DialogContent, Typography, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-const EmailVerificationModal = ({
-  show,
-  onClose,
-  title,
-  description,
-  icon,
-}) => {
+const EmailVerificationModal = ({ show, onClose, title, description, icon }) => {
   return (
-    <Modal show={show} onHide={onClose} className="verify-modal">
-      <Modal.Header className="justify-content-center">
-        <Modal.Title>
-          <img src={icon} alt="" className="mb-4" />
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="p-0">
-        <h1 className="modal-heading mb-2">
-          <span className="secondary-text">{title}</span>
-        </h1>
-        <p className="modal-desc mb-0 mt-0">{description}</p>
-      </Modal.Body>
-    </Modal>
+    <Dialog open={show} onClose={onClose}>
+      <DialogTitle>
+        <div style={{ textAlign: 'center' }}>
+          <img src={icon} alt="" style={{ marginBottom: '1rem' }} />
+        </div>
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant="h5" gutterBottom>
+          <span>{title}</span>
+        </Typography>
+        <Typography className="modal-desc">{description}</Typography>
+      </DialogContent>
+    </Dialog>
   );
 };
 

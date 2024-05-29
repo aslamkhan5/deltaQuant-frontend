@@ -1,13 +1,17 @@
 import React from "react";
 import MainRoute from "./routes";
 import { ToastContainer } from "react-toastify";
-
+import './assets/styles/generic-styling.css';
+import { ThemeProvider } from "@emotion/react";
+import theme from "./utils/images/theme";
+import {CssBaseline}  from "@mui/material";
 const App = () => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <ToastContainer />
       <MainRoute />
-    </div>
+    </ThemeProvider>
   );
 };
 

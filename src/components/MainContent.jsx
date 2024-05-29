@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material";
+import React, { useEffect } from "react";
 const MainContent = () => {
 
 
@@ -8,9 +8,9 @@ const MainContent = () => {
   }, []);
 
   return (
-    <Container fluid className="main-content dashboard-main">
+    <Grid>
       <h1>hello world</h1>
-    </Container>
+    </Grid>
   );
 };
 

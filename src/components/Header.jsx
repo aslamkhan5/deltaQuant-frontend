@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
 import { useLocation } from "react-router";
 import { RiMenu3Fill } from "react-icons/ri";
 import ProfileSwitcher from "./ProfileSwitcher";
 import PostModal from "./postModal";
+import { Grid } from "@mui/material";
 
 const Header = ({ toggleSidebar }) => {
   const [showPostModal, setShowPostModal] = useState(false);
   const location = useLocation();
   return (
-    <Container
+    <Grid
       fluid
       className=" header d-flex flex-row align-items-center justify-content-between "
       style={{background: "black"}}
@@ -29,7 +29,7 @@ const Header = ({ toggleSidebar }) => {
         <PostModal show={showPostModal} onClose={() => setShowPostModal(false)} />
         <ProfileSwitcher />
       </div>
-    </Container>
+    </Grid>
   );
 };
 

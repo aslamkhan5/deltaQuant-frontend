@@ -1,194 +1,194 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Spinner } from "react-bootstrap";
-import { HiOutlineArrowRight } from "react-icons/hi2";
-import { User } from "../../utils/images/index";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import InputField from "../../components/InputField";
-import PasswordInput from "../../components/PasswordInput";
-import FormLabel from "../../components/FormLabel";
-import SocialLinks from "../../components/SocialLinks";
-import { isValidEmail, validateForm } from "../../helpers";
-import LoaderGif from "../../components/LoaderGif";
+import React, { useEffect, useState } from "react"
+import {
+  Container,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+  Box,
+  Checkbox,
+  Link as MuiLink,
+} from "@mui/material"
+import { HiOutlineArrowRight } from "react-icons/hi2"
+import { User } from "../../utils/images/index"
+import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import InputField from "../../components/InputField"
+import PasswordInput from "../../components/PasswordInput"
+import SocialLinks from "../../components/SocialLinks"
+import { isValidEmail, validateForm } from "../../helpers"
+import LoaderGif from "../../components/LoaderGif"
+import { primaryColor } from "../../constants/color"
+import PrimaryButton from "../../components/PrimaryButton"
 
 const Login = () => {
-  const navigate = useNavigate();
-  const recaptchaRef = React.createRef();
-  const [captchaValue, setCaptchaValue] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     rememberMe: false,
-  });
+  })
   const [errors, setErrors] = useState({
     username: "",
     password: "",
-    captcha: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [loader, setLoader] = useState(true);
+  })
+  const [loading, setLoading] = useState(false)
+  const [loader, setLoader] = useState(true)
 
   const handleTogglePassword = (event) => {
-    event.preventDefault();
-    setShowPassword(!showPassword);
-  };
+    event.preventDefault()
+    setShowPassword(!showPassword)
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-    const newErrors = { ...errors };
+    })
+    const newErrors = { ...errors }
 
     if (newErrors[name] && value.trim() !== "") {
-      delete newErrors[name];
+      delete newErrors[name]
     }
 
     if (name === "username" && !isValidEmail(value)) {
-      newErrors.username = "Please enter a valid email address";
+      newErrors.username = "Please enter a valid email address"
     }
 
-    setErrors(newErrors);
-  };
+    setErrors(newErrors)
+  }
 
   const handleSubmit = (e) => {
-    navigate("/dashboard");
-  };
+    e.preventDefault()
+    navigate("/dashboard")
+  }
 
   const handleRememberMe = (e) => {
-    const { checked } = e.target;
+    const { checked } = e.target
     setFormData({
       ...formData,
       rememberMe: checked,
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoader(false);
-    }, 2000);
+      setLoader(false)
+    }, 2000)
 
-    const userId = localStorage.getItem("userId");
-    const role = localStorage.getItem("userRole");
+    const role = localStorage.getItem("userRole")
 
-    if (role && role != "null") navigate("/dashboard");
+    if (role && role !== "null") navigate("/dashboard")
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearTimeout(timer)
+  }, [navigate])
 
   return (
     <>
       {loader ? (
         <LoaderGif />
       ) : (
-        <Container fluid className="main-wrapper">
-          <Row>
-            <Col lg={12} md={12} sm={12} className="user-transformation">
-              <div className="create-account">
-                <div className=" d-flex gap-3 align-items-center">
-                  <h1 className="main-heading mb-0 mt-1">Welcome back</h1>
-                  <img src={User} alt="Logo" className="user-img" />
-                </div>
-                <Form className="mt-5 login-form" onSubmit={handleSubmit}>
-                  <div className="form-group d-flex flex-column gap-2">
-                    <FormLabel
-                      className="form-label aestaric"
-                      labelText="Email Address"
-                      required={true}
-                    />
-                    <InputField
-                      className="form-input"
-                      placeholder="Enter your email address"
-                      type="text"
-                      id="username"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                    />
-                    {errors.username && (
-                      <p className="error-message secondary-text mb-0">
-                        {errors.username}
-                      </p>
-                    )}
-                  </div>
-                  <div className="form-group formlabel-input d-flex flex-column gap-2 mt-4 ">
-                    <FormLabel
-                      className="form-label  aestaric"
-                      labelText="Password"
-                      required={true}
-                    />
-                    <PasswordInput
-                      className="form-input"
-                      type="password"
-                      placeholder="Enter your password"
-                      id="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      showPassword={showPassword}
-                      handleTogglePassword={handleTogglePassword}
-                    />
-                    {errors.password && (
-                      <p className="error-message secondary-text mb-0">
-                        {errors.password}
-                      </p>
-                    )}
-                  </div>
-                  <div className=" d-flex justify-content-between align-items-center mt-4 formlabel-input">
-                    <div className="d-flex align-items-center gap-2">
-                      <input
-                        type="checkbox"
-                        className="checkbox-box"
-                        onClick={(e) => handleRememberMe(e)}
-                      />
-                      <p className="checkbox-desc mb-0 remember-text">
-                        Remember me
-                      </p>
-                    </div>
-                    <Link
-                      to="/reset-password"
-                      className="checkbox-desc fw-normal"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className=" primary-btn mt-4 d-flex gap-2 justify-content-center align-items-center "
-                    disabled={loading}
-                  >
-                    Login
-                    {loading ? (
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <HiOutlineArrowRight className="right-arrow" />
-                    )}
-                  </button>
-                  <p className="or-desc mt-4 mb-4">Or</p>
-                  <SocialLinks />
-                  <p className="go-signin ">
-                    Don’t have an account yet?
-                    <Link to="/signup" className="secondary-text">
-                      &nbsp;Sign up today
-                    </Link>
-                  </p>
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        <Grid container direction="column" className="main-wrapper" alignItems="center" gap={2}>
+          <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+            Sign in to your account
+          </Typography>
+          <Typography mb={2} color="#FFFFFF" sx={{ fontWeight: 400, fontSize: 16, textAlign: "center" }}>
+            Sign in to trace account to start managing your inventory <br /> in a go with
+            our easy to use dashboard
+          </Typography>
+          <Grid container justifyContent="center" sx={{ mb: 2 }}>
+            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+              <TextField
+                fullWidth
+                placeholder="Enter your email address"
+                type="text"
+                id="username"
+                sx={{ background: "white", borderRadius: 1 }}
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                error={!!errors.username}
+                helperText={errors.username}
+                // label="Email Address"
+                required
+              />
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+              <PasswordInput
+                type="password"
+                placeholder="Enter your password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                showPassword={showPassword}
+                handleTogglePassword={handleTogglePassword}
+                error={!!errors.password}
+                helperText={errors.password}
+                label="Password"
+                required
+              />
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Checkbox
+                    title="label"
+                    checked={formData.rememberMe}
+                    onChange={handleRememberMe}
+                  // style={{color:"white",accentColor:"red"}}
+                  />
+                  <Typography variant="body2" color="secondary">
+                    Remember me
+                  </Typography>
+                </Box>
+                <MuiLink component={Link} to="/reset-password" color="primary">
+                  Forgot password?
+                </MuiLink>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+              <PrimaryButton
+                loading={loading}
+                title="Sign In"
+                onClick={() => {
+                  console.log('login clicked');
+                }}
+                backgroundColor={primaryColor}
+                variant="container"
+              />
+            </Grid>
+          </Grid>
+          {/* <Grid container justifyContent="center">
+              <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+                <Typography variant="body2" align="center" color="primary" sx={{my:2}}>
+                  Or
+                </Typography>
+              </Grid>
+            </Grid> */}
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+              <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
+                Don’t have an account yet?
+                <MuiLink component={Link} to="/signup" color="primary">
+                  &nbsp;Sign up
+                </MuiLink>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

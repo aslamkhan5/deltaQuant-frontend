@@ -1,46 +1,59 @@
-import React from "react";
-import { Dropdown } from "react-bootstrap";
-import { RiArrowDownSLine } from "react-icons/ri";
-import { dummyProfile } from "../utils/images";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react"
+import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material"
+import { RiArrowDownSLine } from "react-icons/ri"
+import { dummyProfile } from "../utils/images"
+import { Link, useNavigate } from "react-router-dom"
 
 const ProfileSwitcher = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
+
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+    localStorage.clear()
+    navigate("/")
+  }
 
   return (
-    <div className="profile-dropdown d-flex flex-row gap-2 align-items-center">
-      <div className="profilep-img">
-        <img
-          src={dummyProfile}
-          alt=""
-        />
-      </div>
-      <div className="owner-profile d-flex  flex-column gap-1">
-        <h1 className="owner-name mb-0" style={{color: "white"}}>Test User</h1>
-        <Dropdown className="settings-dropdown">
-          <Dropdown.Toggle
-            id="dropdown-basic"
-            className="d-flex align-items-center gap-1"
-          >
-            Admin
-            <RiArrowDownSLine className="arrow-down" />
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu className="profile-dropdown"> 
-            <Link className="profile-item">
-              <Dropdown.Item onClick={() => handleLogout()}>
-                Logout
-              </Dropdown.Item>
+    <Box className="profile-dropdown d-flex flex-row gap-2 align-items-center">
+      <Avatar src={dummyProfile} alt="Profile" className="profilep-img" />
+      <Box className="owner-profile d-flex flex-column gap-1">
+        <Typography variant="h6" className="owner-name mb-0" sx={{ color: "white" }}>
+          Test User
+        </Typography>
+        <Button
+          aria-controls="profile-menu"
+          aria-haspopup="true"
+          onClick={handleMenuOpen}
+          className="d-flex align-items-center gap-1"
+          endIcon={<RiArrowDownSLine className="arrow-down" />}
+        >
+          Admin
+        </Button>
+        <Menu
+          id="profile-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          className="profile-dropdown"
+        >
+          <MenuItem onClick={handleLogout}>
+            <Link to="/" className="profile-item">
+              Logout
             </Link>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
-    </div>
-  );
-};
+          </MenuItem>
+        </Menu>
+      </Box>
+    </Box>
+  )
+}
 
-export default ProfileSwitcher;
+export default ProfileSwitcher
