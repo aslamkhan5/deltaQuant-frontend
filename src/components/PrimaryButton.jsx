@@ -3,19 +3,18 @@ import React from 'react'
 import { primaryColor } from '../constants/color'
 import { HiOutlineArrowRight } from 'react-icons/hi2'
 
-const PrimaryButton = ({loading,onClick,title,variant,backgroundColor}) => {
+const PrimaryButton = ({loading,onClick,title,variant,backgroundColor=primaryColor,textColor="#FFFFFF"}) => {
   return (
-    <Button 
-    type="submit"
+    <Button
     variant={variant}
-    color={backgroundColor}
     fullWidth
-    style={{ backgroundColor: primaryColor }}
+    style={{ backgroundColor: backgroundColor,fontWeight:600,fontSize:16,color:textColor }}
     disabled={loading}
     onClick={onClick}
     endIcon={
-      loading ? <CircularProgress size={20} /> : <HiOutlineArrowRight />
-    }>{title}</Button>
+      loading ? <CircularProgress size={20} color='secondary'/> : <HiOutlineArrowRight  display={title === "Back to Login" ? "none" : "block"}/>
+    }
+    >{title}</Button>
   )
 }
 

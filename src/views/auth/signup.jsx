@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Link, useNavigate } from "react-router-dom"
-import { Container, Grid, Typography, TextField, Checkbox, Button, CircularProgress, Box } from "@mui/material"
+import { Container, Grid, Typography, TextField, Checkbox, Button, CircularProgress, Box, Link as MuiLink, FormControlLabel, useTheme, useMediaQuery } from "@mui/material"
 import { HiOutlineArrowRight } from "react-icons/hi2"
 import { User } from "../../utils/images/index"
 import FormLabel from "../../components/FormLabel"
@@ -10,23 +10,32 @@ import SocialLinks from "../../components/SocialLinks"
 import PasswordInput from "../../components/PasswordInput"
 import Api from "../../services/api"
 import { isValidEmail, validateForm, validatePassword } from "../../helpers"
+import PrimaryButton from "../../components/PrimaryButton"
+import useAxios from "../../hooks/useAxios"
+import { config } from "../../configs"
 
 const SignUp = () => {
-  const navigate = useNavigate()
-  const [captchaValue, setCaptchaValue] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const theme = useTheme();
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     password: "",
     privacyPolicy: false,
   })
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'))
+  const navigate = useNavigate()
+  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}/v1/guest/register`,'POST',formData)
+  const [captchaValue, setCaptchaValue] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     password: "",
     privacyPolicy: "",
     captcha: "",
   })
-  const [loading, setLoading] = useState(false)
 
   const handleTogglePassword = (event) => {
     event.preventDefault()
@@ -72,16 +81,19 @@ const SignUp = () => {
     setErrors(newErrors)
   }
 
-  const handleSubmit = async (e) => {
+  useEffect(()=>{
+    if(data?.status === 200) {
+      navigate("/login")
+    }
+  },[data])
+  const handleSignUp = async (e) => {
     e.preventDefault()
-
     const isValid = validateForm(
       formData,
       setErrors,
       isValidEmail,
       validatePassword
     )
-
     if (isValid && !captchaValue) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -89,27 +101,27 @@ const SignUp = () => {
       }))
       return
     }
-
     if (isValid && captchaValue) {
-      try {
-        setLoading(true)
-        const response = await Api.register({
-          email: formData.username,
-          password: formData.password,
-        })
-        if (response?.success) {
-          localStorage.setItem("token", response.data.token)
-          toast.success("Signup Successfully")
+      execute()
+      // try {
+      //   setLoading(true)
+      //   const response = await Api.register({
+      //     email: formData.username,
+      //     password: formData.password,
+      //   })
+      //   if (response?.success) {
+      //     localStorage.setItem("token", response.data.token)
+      //     toast.success("SignUp Successfully")
 
-          navigate("/send-email", { state: { email: formData.username } })
-        } else {
-          console.error(response?.message)
-        }
-      } catch (error) {
-        toast.error(error?.data?.message)
-      } finally {
-        setLoading(false)
-      }
+      //     navigate("/send-email", { state: { email: formData.username } })
+      //   } else {
+      //     console.error(response?.message)
+      //   }
+      // } catch (error) {
+      //   toast.error(error?.data?.message)
+      // } finally {
+      //   setLoading(false)
+      // }
     }
   }
 
@@ -122,90 +134,127 @@ const SignUp = () => {
   }, [navigate])
 
   return (
-    <Container maxWidth="sm">
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12}>
-          <Box display="flex" alignItems="center" gap={2}>
-            <Typography variant="h4" component="h1">
-              Create your account
+    <Container maxWidth="lg">
+      <Grid container direction="column" className="main-wrapper" alignItems="center" gap={2}>
+        <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+          Sign Up to your account
+        </Typography>
+        <Typography
+            mb={2}
+            color="#FFFFFF"
+            sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
+          >
+            Sign up to trace account to start managing your inventory
+            {!isXs && <br />}
+            in a go with our easy to use dashboard
+          </Typography>
+        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <TextField
+              fullWidth
+              placeholder="First Name"
+              type="text"
+              name="firstName"
+              sx={{ background: "white", borderRadius: 1 }}
+              value={formData.firstName}
+              onChange={handleChange}
+              error={!!errors.firstName}
+              helperText={errors.firstName}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <TextField
+              fullWidth
+              placeholder="Last Name"
+              type="text"
+              name="lastName"
+              sx={{ background: "white", borderRadius: 1 }}
+              value={formData.lastName}
+              onChange={handleChange}
+              error={!!errors.lastName}
+              helperText={errors.lastName}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <TextField
+              fullWidth
+              placeholder="Enter your email address"
+              type="text"
+              id="username"
+              sx={{ background: "white", borderRadius: 1 }}
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              error={!!errors.username}
+              helperText={errors.username}
+              // label="Email Address"
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <PasswordInput
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              showPassword={showPassword}
+              handleTogglePassword={handleTogglePassword}
+              error={!!errors.password}
+              helperText={errors.password}
+              label="Password"
+              required
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <Box display="flex" alignItems="center">
+              <Checkbox
+                title="Remember me"
+                checked={formData.privacyPolicy}
+                onChange={handlePrivacyPolicy}
+                margin={0} padding={0}
+              />
+              <Typography variant="body1" component="span" color="secondary">
+                I agree to DeltaQuant’s Website <b>Terms of Use</b> and <b>Privacy Policy</b>
+              </Typography>
+            </Box>
+            {errors.privacyPolicy && (
+              <Typography variant="body2" color="error" className="mt-3 mb-0">
+                {errors.privacyPolicy}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <PrimaryButton
+              loading={apiState}
+              title="Sign Up"
+              onClick={handleSignUp}
+              variant="contained"
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
+              Already have an account?
+              <MuiLink component={Link} to="/login" color="primary">
+                &nbsp;Login
+              </MuiLink>
             </Typography>
-            <img src={User} alt="Logo" style={{ width: 50, height: 50 }} />
-          </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <FormLabel required>Email Address</FormLabel>
-                <TextField
-                  fullWidth
-                  placeholder="Enter your email address"
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  error={!!errors.username}
-                  helperText={errors.username}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormLabel required>Password</FormLabel>
-                <PasswordInput
-                  fullWidth
-                  type="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  name="password"
-                  onChange={handleChange}
-                  showPassword={showPassword}
-                  handleTogglePassword={handleTogglePassword}
-                  error={!!errors.password}
-                  helperText={errors.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Checkbox
-                    checked={formData.privacyPolicy}
-                    onChange={handlePrivacyPolicy}
-                  />
-                  <Typography>
-                    I agree to DeltaQuant’s Website <b>Terms of Use</b> and <b>Privacy Policy</b>
-                  </Typography>
-                </Box>
-                {errors.privacyPolicy && (
-                  <Typography color="error">{errors.privacyPolicy}</Typography>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disabled={loading}
-                  endIcon={
-                    loading ? <CircularProgress size={20} /> : <HiOutlineArrowRight />
-                  }
-                >
-                  Create Account
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography align="center">Or</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <SocialLinks />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography align="center">
-                  Already on DeltaQuant? <Link to="/">Sign in</Link>
-                </Typography>
-              </Grid>
-            </Grid>
-          </form>
-        </Grid>
-      </Grid>
+      </Grid >
     </Container>
   )
 }

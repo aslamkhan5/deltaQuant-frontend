@@ -20,7 +20,7 @@ const useStyles = {
 };
 
 const PasswordInput = (props) => {
-  const { showPassword, handleTogglePassword, disabled, className, name, placeholder, autoComplete, onChange, value } = props;
+  const { error,helperText, disabled, className, name, placeholder, autoComplete, onChange, value } = props;
 
   return (
     <PasswordInputWrapper className={`${disabled ? useStyles.disabledPasswordInput : ""} ${className}`}>
@@ -32,25 +32,27 @@ const PasswordInput = (props) => {
         placeholder={placeholder}
         className="password-input"
         onChange={onChange}
-        sx={{ background: "white",borderRadius:1 }}
+        sx={{ background: "white", borderRadius: 1 }}
         autoComplete={autoComplete}
         disabled={disabled}
         value={value}
         variant="outlined"
-        // InputProps={{
-        //   endAdornment: (
-        //     <InputAdornment position="end">
-        //       <IconButton
-        //         aria-label="toggle password visibility"
-        //         onClick={handleTogglePassword}
-        //         edge="end"
-        //         style={useStyles.eyeButton}
-        //       >
-        //         {showPassword ? <FaEye /> : <FaEyeSlash />}
-        //       </IconButton>
-        //     </InputAdornment>
-        //   ),
-        // }}
+        error={error}
+        helperText={helperText}
+      // InputProps={{
+      //   endAdornment: (
+      //     <InputAdornment position="end">
+      //       <IconButton
+      //         aria-label="toggle password visibility"
+      //         onClick={handleTogglePassword}
+      //         edge="end"
+      //         style={useStyles.eyeButton}
+      //       >
+      //         {showPassword ? <FaEye /> : <FaEyeSlash />}
+      //       </IconButton>
+      //     </InputAdornment>
+      //   ),
+      // }}
       />
     </PasswordInputWrapper>
   );

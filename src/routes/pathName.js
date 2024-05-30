@@ -1,5 +1,5 @@
 const signup = "/Signup";
-const login = "/";
+const login = "/login";
 const updatePassword = "/:token/update-password";
 const resetPassword = "/reset-password";
 const sendEmail = "/send-email";

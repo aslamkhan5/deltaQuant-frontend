@@ -56,16 +56,39 @@ export const validateForm = (
 ) => {
   const newErrors = {};
 
-  validateField(
-    formData.username,
-    "username",
-    "Please enter your email address",
-    (value) => !isValidEmail(value) && "Please enter a valid email address",
-    newErrors
-  );
-  if (validatePassword)
+  if (formData.firstName !== undefined) {
     validateField(
-      formData?.password.trim(),
+      formData.firstName,
+      "firstName",
+      "Please enter your first name",
+      (value) => value.trim().length === 0 && "First name cannot be empty",
+      newErrors
+    );
+  }
+
+  if (formData.lastName !== undefined) {
+    validateField(
+      formData.lastName,
+      "lastName",
+      "Please enter your last name",
+      (value) => value.trim().length === 0 && "Last name cannot be empty",
+      newErrors
+    );
+  }
+
+  if (formData.username !== undefined) {
+    validateField(
+      formData.username,
+      "username",
+      "Please enter your email address",
+      (value) => !isValidEmail(value) && "Please enter a valid email address",
+      newErrors
+    );
+  }
+
+  if (validatePassword && formData.password !== undefined) {
+    validateField(
+      formData.password.trim(),
       "password",
       "Please enter your password",
       (value) =>
@@ -73,13 +96,17 @@ export const validateForm = (
         "Password must contain at least one lowercase letter, one uppercase letter, one number, one symbol, and be at least 8 characters long",
       newErrors
     );
-  validateField(
-    formData.privacyPolicy,
-    "privacyPolicy",
-    "Please check that you agree to our Terms of use and Privacy policy",
-    null,
-    newErrors
-  );
+  }
+
+  if (formData.privacyPolicy !== undefined) {
+    validateField(
+      formData.privacyPolicy,
+      "privacyPolicy",
+      "Please check that you agree to our Terms of use and Privacy policy",
+      null,
+      newErrors
+    );
+  }
 
   setErrors(newErrors);
 

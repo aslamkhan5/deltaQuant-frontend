@@ -1,11 +1,13 @@
 import React from 'react';
 import { Gif } from '../utils/images';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 
 const LoaderGif = () => {
 
     return (
-        <CircularProgress size={20}/>
+        <Grid container className='main-wrapper'>
+            <CircularProgress size={20}/>
+        </Grid>
     )
 }
 
