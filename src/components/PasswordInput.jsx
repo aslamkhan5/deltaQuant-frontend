@@ -32,7 +32,6 @@ const PasswordInput = (props) => {
         placeholder={placeholder}
         className="password-input"
         onChange={onChange}
-        sx={{ background: "white", borderRadius: 1 }}
         autoComplete={autoComplete}
         disabled={disabled}
         value={value}

@@ -109,7 +109,6 @@ const ResetPassword = () => {
                 placeholder="Enter your email address"
                 type="text"
                 id="email"
-                sx={{ background: "white", borderRadius: 1 }}
                 name="email"
                 value={formData.email}
                 onChange={handleChange}

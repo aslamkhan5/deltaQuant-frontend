@@ -9,7 +9,7 @@ const MainContent = () => {
 
   return (
     <Grid>
-      <h1>hello world</h1>
+      <h1 color="white">hello world</h1>
     </Grid>
   );
 };

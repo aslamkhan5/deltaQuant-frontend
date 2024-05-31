@@ -38,7 +38,7 @@ const Login = () => {
     password: "",
     rememberMe: false,
   })
-  const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}/v1/guest/login`, 'POST', formData)
+  const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}v1/guest/login`, 'POST', formData)
   const [errors, setErrors] = useState({
     username: "",
     password: "",
@@ -82,11 +82,11 @@ const Login = () => {
       validatePassword
     )
     if (isValid) {
-      execute()
+      // execute()
       // going to dashboard until not integrated with api
       
-      // authenticate()
-      // navigate("/dashboard")
+      authenticate()
+      navigate("/dashboard")
     }
   }
 
@@ -137,7 +137,6 @@ const Login = () => {
             placeholder="Enter your email address"
             type="text"
             id="username"
-            sx={{ background: "white", borderRadius: 1 }}
             name="username"
             value={formData.username}
             onChange={handleChange}

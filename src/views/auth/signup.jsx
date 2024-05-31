@@ -25,7 +25,7 @@ const SignUp = () => {
   })
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
-  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}/v1/guest/register`,'POST',formData)
+  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}v1/guest/register`,'POST',formData)
   const [captchaValue, setCaptchaValue] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({

@@ -1,164 +1,94 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TbHome2, TbBadge } from "react-icons/tb";
-import { CgFeed } from "react-icons/cg";
-import { PiUsersThreeLight } from "react-icons/pi";
-import { TiWorldOutline } from "react-icons/ti";
-import { RiSettings4Line } from "react-icons/ri";
-import { HiOutlineChatBubbleLeft } from "react-icons/hi2";
-import { Link } from "react-router-dom";
-import Header from "./Header";
-import { RoleContext } from "../context/currentRole";
-import { RxCross2 } from "react-icons/rx";
+// Sidebar.js
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { List, ListItem, ListItemIcon, ListItemText, Button } from '@mui/material'
+import { styled } from '@mui/styles'
+import { sidebarElements } from '../constants/SidebarElements'
+import LogoutIcon from '@mui/icons-material/Logout'
 
-const Sidebar = ({ children }) => {
-  const { setCurrentRole, isColor, setIsColor } = useContext(RoleContext);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const SidebarContainer = styled('div')(({ theme }) => ({
+  width: '200px',
+  backgroundColor: '#233228',
+  height: '100vh',
+  padding: '20px 0',
+  boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+}))
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-    if (!isSidebarOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-  };
+const SidebarLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: '#ffffff',
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  '&.active': {
+    color: '#57D57B',
+  },
+}))
 
-  const handleTabActive = (tab) => {
-    localStorage.setItem("activeTab", tab);
-    setIsColor(tab);
-  };
+const CustomListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+  color: '#ffffff',
+  '&.active': {
+    color: '#57D57B',
+  },
+}))
 
-  useEffect(() => {
-    const activeTab = localStorage.getItem("activeTab");
-    setIsColor(
-      window.location.pathname === "/dashboard"
-        ? "home"
-        : activeTab
-        ? activeTab
-        : "home"
-    );
-    const userRole = JSON.parse(localStorage.getItem("userRole")) || [];
-    const role = localStorage?.getItem("currentRole");
-    setCurrentRole(role);
-    localStorage.setItem("currentRole", role);
-  }, []);
+const CustomElement = styled('div')({
+  width: '4px',
+  height: '30px',
+  borderRadius: '0px 10.67px 10.67px 0',
+  backgroundColor: '#57D57B',
+  position: 'absolute',
+  left: 0,
+})
+
+const LogoutButton = styled(Button)(({ theme }) => ({
+  margin: '20px',
+  color: '#ffffff',
+  backgroundColor: '#FF0000',
+  '&:hover': {
+    backgroundColor: '#FF4C4C',
+  },
+}))
+
+const Sidebar = () => {
+  const location = useLocation()
 
   return (
-    <div className="dashboard">
-      <span
-        className={`overlay-styled ${isSidebarOpen ? "is-active" : ""}`}
-        onClick={() => setIsSidebarOpen(false)}
-      ></span>
-      <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-      <div className="main-dashboard">
-        <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-          <div className="cross-icon " onClick={toggleSidebar}>
-            <RxCross2 className="opener" />
-          </div>
-          <Link to="/dashboard">
-            <div
-              id="home"
-              onClick={() => handleTabActive("home")}
-              className={
-                isColor === "home" ? "sidebar-item active" : "sidebar-item"
-              }
+    <SidebarContainer>
+      <List>
+        {sidebarElements.map((item, index) => {
+          const isActive = location.pathname === `/${item.title.toLowerCase()}`
+          return (
+            <SidebarLink
+              to={`/${item.title.toLowerCase()}`}
+              key={index}
+              className={isActive ? 'active' : ''}
             >
-              <TbHome2 className="sidebar-icon" />
-              <span>Dashboard</span>
-            </div>
-          </Link>
-          <Link to="/bots">
-            <div
-              key="feed"
-              onClick={() => {
-                handleTabActive("feed");
-              }}
-              className={
-                isColor === "feed" ? "sidebar-item active" : "sidebar-item"
-              }
-            >
-              <CgFeed className="sidebar-icon" />
-              <span>Bots</span>
-            </div>
-          </Link>
-          <Link to="/position">
-            <div
-              key="investors"
-              onClick={() => {
-                handleTabActive("investors");
-              }}
-              className={
-                isColor === "investors" ? "sidebar-item active" : "sidebar-item"
-              }
-            >
-              <PiUsersThreeLight className="sidebar-icon" />
-              <span>Position</span>
-            </div>
-          </Link>
-          <Link to="/orders">
-            <div
-              key="startups"
-              onClick={() => {
-                handleTabActive("startups");
-              }}
-              className={
-                isColor === "startups" ? "sidebar-item active" : "sidebar-item"
-              }
-            >
-              <TbBadge className="sidebar-icon" />
-              <span>Orders</span>
-            </div>
-          </Link>
-          <Link to="/performance">
-            <div
-              key="followers"
-              onClick={() => {
-                handleTabActive("followers");
-              }}
-              className={
-                isColor === "followers" ? "sidebar-item active" : "sidebar-item"
-              }
-            >
-              <TiWorldOutline className="sidebar-icon" />
-              <span>Performance</span>
-            </div>
-          </Link>
+              {isActive && <CustomElement />}
+              <ListItem button>
+                <CustomListItemIcon className={isActive ? 'active' : ''}>
+                  <item.icon />
+                </CustomListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItem>
+            </SidebarLink>
+          )
+        })}
+      </List>
+      <LogoutButton
+        startIcon={<LogoutIcon />}
+        onClick={() => {
+          // Add your logout logic here
+          console.log('Logging out')
+        }}
+      >
+        Logout
+      </LogoutButton>
+    </SidebarContainer>
+  )
+}
 
-          <Link to="/inbox">
-            <div
-              key="chat"
-              onClick={() => {
-                handleTabActive("chat");
-              }}
-              className={
-                isColor === "chat" ? "sidebar-item active" : "sidebar-item"
-              }
-            >
-              <HiOutlineChatBubbleLeft className="sidebar-icon" />
-              <span>Inbox</span>
-            </div>
-          </Link>
-          <Link to="/reports">
-            <div
-              key="user-settings"
-              onClick={() => {
-                handleTabActive("user-settings");
-              }}
-              className={
-                isColor === "user-settings"
-                  ? "sidebar-item active"
-                  : "sidebar-item"
-              }
-            >
-              <RiSettings4Line className="sidebar-icon" />
-              <span>Reports</span>
-            </div>
-          </Link>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
-};
-
-export default Sidebar;
+export default Sidebar
