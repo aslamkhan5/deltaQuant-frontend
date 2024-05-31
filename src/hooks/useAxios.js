@@ -27,10 +27,14 @@ const createAxiosRequest = async (
     }
   }
 
+  const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0;
+  }
+
   // Create Axios request configuration
   const config = {
     method,
-    url: queryParams ? `${url}?${new URLSearchParams(queryParams)}` : url,
+    url: isEmptyObject(queryParams) ? url: `${url}?${new URLSearchParams(queryParams)}`,
     headers,
     data: payload,
   };

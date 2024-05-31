@@ -11,6 +11,6 @@ body {
     margin-top: 'auto';
     padding: 20px;
     width: 100% !important;
-    /* height: 100vh; */
+    height: 100vh;
     background: black;
 }

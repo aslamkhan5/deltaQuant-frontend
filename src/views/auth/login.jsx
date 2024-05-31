@@ -26,6 +26,7 @@ import PrimaryButton from "../../components/PrimaryButton"
 import { useAuth } from "../../context/authContext"
 import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
+import { toast } from "react-toastify"
 
 const Login = () => {
   const theme = useTheme();
@@ -38,7 +39,7 @@ const Login = () => {
     password: "",
     rememberMe: false,
   })
-  const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}v1/guest/login`, 'POST', formData)
+  const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}/api/guest/login?email=${formData.username}&password=${formData.password}`, 'GET')
   const [errors, setErrors] = useState({
     username: "",
     password: "",
@@ -82,16 +83,14 @@ const Login = () => {
       validatePassword
     )
     if (isValid) {
-      // execute()
-      // going to dashboard until not integrated with api
-      
-      authenticate()
-      navigate("/dashboard")
+      execute()
     }
   }
 
   useEffect(() => {
     if (data?.status) {
+      localStorage.setItem("token", data.token)
+      toast.success(data.message)
       authenticate()
       navigate("/dashboard")
     }
@@ -117,102 +116,104 @@ const Login = () => {
   }, [navigate])
 
   return (
-    <Grid container direction="column" height="100vh" className="main-wrapper" gap={2}>
-      <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
-        Sign in to your account
-      </Typography>
-      <Typography
-        mb={2}
-        color="#FFFFFF"
-        sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
-      >
-        Sign in to trace account to start managing your inventory
-        {!isXs && <br />}
-        in a go with our easy to use dashboard
-      </Typography>
-      <Grid container justifyContent="center" sx={{ mb: 2 }}>
-        <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-          <TextField
-            fullWidth
-            placeholder="Enter your email address"
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            error={!!errors.username}
-            helperText={errors.username}
-            // label="Email Address"
-            required
-          />
+    <Container maxWidth="lg">
+      <Grid container direction="column" height="100vh" className="main-wrapper" gap={2}>
+        <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+          Sign in to your account
+        </Typography>
+        <Typography
+          mb={2}
+          color="#FFFFFF"
+          sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
+        >
+          Sign in to trace account to start managing your inventory
+          {!isXs && <br />}
+          in a go with our easy to use dashboard
+        </Typography>
+        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <TextField
+              fullWidth
+              placeholder="Enter your email address"
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              error={!!errors.username}
+              helperText={errors.username}
+              // label="Email Address"
+              required
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-          <PasswordInput
-            type="password"
-            placeholder="Enter your password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            showPassword={showPassword}
-            handleTogglePassword={handleTogglePassword}
-            error={!!errors.password}
-            helperText={errors.password}
-            label="Password"
-            required
-          />
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <PasswordInput
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              showPassword={showPassword}
+              handleTogglePassword={handleTogglePassword}
+              error={!!errors.password}
+              helperText={errors.password}
+              label="Password"
+              required
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Box display="flex" alignItems="center">
-              <Checkbox
-                title="Remember me"
-                checked={formData.rememberMe}
-                onChange={handleRememberMe}
-                margin={0} padding={0}
-              />
-              <Typography variant="body2" color="secondary" sx={{ ml: 1 }}>
-                Remember me
-              </Typography>
-            </Box>
-            <MuiLink component={Link} to="/reset-password" color="primary">
-              Forgot password?
-            </MuiLink>
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-          <PrimaryButton
-            loading={apiState}
-            title="Sign In"
-            onClick={handleLogin}
-            variant="contained"
-          />
-        </Grid>
-      </Grid>
-      {/* <Grid container justifyContent="center">
-              <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-                <Typography variant="body2" align="center" color="primary" sx={{my:2}}>
-                  Or
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box display="flex" alignItems="center">
+                <Checkbox
+                  title="Remember me"
+                  checked={formData.rememberMe}
+                  onChange={handleRememberMe}
+                  margin={0} padding={0}
+                />
+                <Typography variant="body2" color="secondary" sx={{ ml: 1 }}>
+                  Remember me
                 </Typography>
-              </Grid>
-            </Grid> */}
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-          <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
-            Don’t have an account yet?
-            <MuiLink component={Link} to="/signup" color="primary">
-              &nbsp;Sign up
-            </MuiLink>
-          </Typography>
+              </Box>
+              <MuiLink component={Link} to="/reset-password" color="primary">
+                Forgot password?
+              </MuiLink>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <PrimaryButton
+              loading={apiState}
+              title="Sign In"
+              onClick={handleLogin}
+              variant="contained"
+            />
+          </Grid>
+        </Grid>
+        {/* <Grid container justifyContent="center">
+                <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+                  <Typography variant="body2" align="center" color="primary" sx={{my:2}}>
+                    Or
+                  </Typography>
+                </Grid>
+              </Grid> */}
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
+            <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
+              Don’t have an account yet?
+              <MuiLink component={Link} to="/signup" color="primary">
+                &nbsp;Sign up
+              </MuiLink>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   )
 }
 

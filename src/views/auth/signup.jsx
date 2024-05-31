@@ -13,25 +13,27 @@ import { isValidEmail, validateForm, validatePassword } from "../../helpers"
 import PrimaryButton from "../../components/PrimaryButton"
 import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
+import { useAuth } from "../../context/authContext"
 
 const SignUp = () => {
   const theme = useTheme();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
     password: "",
     privacyPolicy: false,
   })
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
-  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}v1/guest/register`,'POST',formData)
+  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}/api/guest/register`,'POST',formData)
   const [captchaValue, setCaptchaValue] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const { authenticate } = useAuth()
   const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
     password: "",
     privacyPolicy: "",
     captcha: "",
@@ -69,8 +71,8 @@ const SignUp = () => {
       delete newErrors[name]
     }
 
-    if (name === "username" && !isValidEmail(value)) {
-      newErrors.username = "Please enter a valid email address"
+    if (name === "email" && !isValidEmail(value)) {
+      newErrors.email = "Please enter a valid email address"
     }
 
     if (name === "password" && !validatePassword(value)) {
@@ -82,8 +84,11 @@ const SignUp = () => {
   }
 
   useEffect(()=>{
-    if(data?.status === 200) {
-      navigate("/login")
+    if (data?.status) {
+      localStorage.setItem("token", data.token)
+      toast.success(data.message)
+      authenticate()
+      navigate("/dashboard")
     }
   },[data])
   const handleSignUp = async (e) => {
@@ -106,14 +111,14 @@ const SignUp = () => {
       // try {
       //   setLoading(true)
       //   const response = await Api.register({
-      //     email: formData.username,
+      //     email: formData.email,
       //     password: formData.password,
       //   })
       //   if (response?.success) {
       //     localStorage.setItem("token", response.data.token)
       //     toast.success("SignUp Successfully")
 
-      //     navigate("/send-email", { state: { email: formData.username } })
+      //     navigate("/send-email", { state: { email: formData.email } })
       //   } else {
       //     console.error(response?.message)
       //   }
@@ -154,12 +159,12 @@ const SignUp = () => {
               fullWidth
               placeholder="First Name"
               type="text"
-              name="firstName"
+              name="firstname"
               sx={{ background: "white", borderRadius: 1 }}
-              value={formData.firstName}
+              value={formData.firstname}
               onChange={handleChange}
-              error={!!errors.firstName}
-              helperText={errors.firstName}
+              error={!!errors.firstname}
+              helperText={errors.firstname}
             />
           </Grid>
         </Grid>
@@ -169,12 +174,12 @@ const SignUp = () => {
               fullWidth
               placeholder="Last Name"
               type="text"
-              name="lastName"
+              name="lastname"
               sx={{ background: "white", borderRadius: 1 }}
-              value={formData.lastName}
+              value={formData.lastname}
               onChange={handleChange}
-              error={!!errors.lastName}
-              helperText={errors.lastName}
+              error={!!errors.lastname}
+              helperText={errors.lastname}
             />
           </Grid>
         </Grid>
@@ -184,13 +189,13 @@ const SignUp = () => {
               fullWidth
               placeholder="Enter your email address"
               type="text"
-              id="username"
+              id="email"
               sx={{ background: "white", borderRadius: 1 }}
-              name="username"
-              value={formData.username}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              error={!!errors.username}
-              helperText={errors.username}
+              error={!!errors.email}
+              helperText={errors.email}
               // label="Email Address"
               required
             />
