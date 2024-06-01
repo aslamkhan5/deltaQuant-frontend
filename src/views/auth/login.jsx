@@ -27,8 +27,9 @@ import { useAuth } from "../../context/authContext"
 import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
 import { toast } from "react-toastify"
-
+import ReCAPTCHA from "react-google-recaptcha";
 const Login = () => {
+  const recaptchaRef = React.createRef();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
@@ -37,6 +38,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    captcha:null,
     rememberMe: false,
   })
   const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}/api/guest/login?email=${formData.username}&password=${formData.password}`, 'GET')
@@ -82,8 +84,15 @@ const Login = () => {
       isValidEmail,
       validatePassword
     )
+    if(formData.captcha) {
     if (isValid) {
-      execute()
+        // execute()
+        authenticate()
+        navigate("/dashboard")
+      }
+
+    } else {
+      toast.error("Please fill Recaptcha to login")
     }
   }
 
@@ -102,7 +111,13 @@ const Login = () => {
       rememberMe: checked,
     })
   }
-
+  // this will handle recaptcha value
+  function onChange(value) {
+    setFormData({
+      ...formData,
+      captcha:value
+    })
+  }
   useEffect(() => {
     // const timer = setTimeout(() => {
     //   setLoader(false)
@@ -211,6 +226,13 @@ const Login = () => {
               </MuiLink>
             </Typography>
           </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey="6LehyO0pAAAAAMFVSWHus1RloEGCr60_tRQWXAlU"
+          onChange={onChange}
+        />
         </Grid>
       </Grid>
     </Container>
