@@ -1,34 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router";
-import { RiMenu3Fill } from "react-icons/ri";
-import ProfileSwitcher from "./ProfileSwitcher";
-import PostModal from "./postModal";
-import { Grid } from "@mui/material";
-
+import React, { useState } from "react";
+import { Box, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
+import { logo } from "../utils/images";
+import SearchIcon from '@mui/icons-material/Search';
+import Menu from '@mui/icons-material/Menu';
+import CustomTextField from "./CustomTextField";
 const Header = ({ toggleSidebar }) => {
-  const [showPostModal, setShowPostModal] = useState(false);
-  const location = useLocation();
-  return (
-    <Grid
-      fluid
-      className=" header d-flex flex-row align-items-center justify-content-between "
-      style={{background: "black"}}
-    >
-      <div className="menu-header d-flex align-items-center gap-3 flex-row">
-        {[
-          "/dashboard"
-        ].includes(location.pathname) && (
-            <div className="menu-opener" onClick={toggleSidebar}>
-              <RiMenu3Fill className="opener" />
-            </div>
-          )}
-        {/* <AngelLogo className="logo" type="home" /> */}
-      </div>
-      <div className="search-profile d-flex align-items-center gap-4">
+  const [search, setSearch] = useState("");
 
-        <PostModal show={showPostModal} onClose={() => setShowPostModal(false)} />
-        <ProfileSwitcher />
-      </div>
+  return (
+    <Grid container sx={{ background: "#181818", paddingX: 4, paddingY: 1 }} direction="row" alignItems="center" justifyContent="space-between">
+      <Grid item>
+        <Box
+          component="img"
+          // sx={{
+          //   height: 50,
+          //   width: 150,
+          // }}
+          alt="Logo"
+          src={logo}
+        />
+      </Grid>
+      <Grid item xs={10} sm={8} md={8} lg={4} xl={3}>
+        <CustomTextField
+          fullWidth
+          placeholder="Search here"
+          backgroundColor="#2A2A2A"
+          textColor="#FFFFFF"
+          type="text"
+          id="search" value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton edge="end">
+                  <SearchIcon style={{ color: "white" }} />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      </Grid>
+      <Grid item xs={2} sm={2} display={{ xs: 'block', sm: 'none' }}>
+        <IconButton edge="end" onClick={toggleSidebar}>
+          <Menu style={{ color: "white" }} />
+        </IconButton>
+      </Grid>
     </Grid>
   );
 };

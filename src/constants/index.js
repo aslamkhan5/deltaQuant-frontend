@@ -236,3 +236,4 @@ export const countries = [
   "Zambia",
   "Zimbabwe",
 ];
+export const defaultSpacing = 4

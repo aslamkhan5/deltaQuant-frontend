@@ -85,7 +85,7 @@ const Login = () => {
       validatePassword
     )
     if(formData.captcha) {
-    if (isValid) {
+      if (isValid) {
         // execute()
         authenticate()
         navigate("/dashboard")
@@ -230,7 +230,7 @@ const Login = () => {
         <Grid container justifyContent="center">
         <ReCAPTCHA
           ref={recaptchaRef}
-          sitekey="6LehyO0pAAAAAMFVSWHus1RloEGCr60_tRQWXAlU"
+          sitekey="6LfO1O8pAAAAALLL4aoxMHUW7DF8GgpfdMVtxRvd"
           onChange={onChange}
         />
         </Grid>

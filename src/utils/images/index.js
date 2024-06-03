@@ -49,3 +49,5 @@ export { default as Tag } from "../../assets/images/tag-profile.png";
 export { default as WelcomeImage } from "../../assets/images/welcome-image.png";
 export { default as ErrorImage } from "../../assets/images/error-four.png";
 export { default as ErrorGif } from "../../assets/images/error-gif.gif";
+export { default as logo } from "../../assets/images/logo.png";
+export { default as dashboardCard } from "../../assets/images/dashboardcard.png";
