@@ -33,12 +33,13 @@ const Login = () => {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
+  const [captchaError, setCaptchError] = useState(false)
   const { authenticate } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    captcha:null,
+    captcha: null,
     rememberMe: false,
   })
   const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}/api/guest/login?email=${formData.username}&password=${formData.password}`, 'GET')
@@ -84,7 +85,7 @@ const Login = () => {
       isValidEmail,
       validatePassword
     )
-    if(formData.captcha) {
+    if (formData.captcha) {
       if (isValid) {
         // execute()
         authenticate()
@@ -92,7 +93,7 @@ const Login = () => {
       }
 
     } else {
-      toast.error("Please fill Recaptcha to login")
+      setCaptchError(true)
     }
   }
 
@@ -115,7 +116,7 @@ const Login = () => {
   function onChange(value) {
     setFormData({
       ...formData,
-      captcha:value
+      captcha: value
     })
   }
   useEffect(() => {
@@ -227,13 +228,20 @@ const Login = () => {
             </Typography>
           </Grid>
         </Grid>
+
         <Grid container justifyContent="center">
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey="6LfO1O8pAAAAALLL4aoxMHUW7DF8GgpfdMVtxRvd"
-          onChange={onChange}
-        />
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LfO1O8pAAAAALLL4aoxMHUW7DF8GgpfdMVtxRvd"
+            onChange={onChange}
+          />
         </Grid>
+        
+        {captchaError && (
+            <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+              Please fill Recaptcha to login
+            </Typography>
+          )}
       </Grid>
     </Container>
   )
