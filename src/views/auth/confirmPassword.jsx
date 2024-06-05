@@ -152,6 +152,7 @@ const ConfirmPassword = () => {
   // },[errorVerify])
 
   useEffect (() => {
+    if(!email || !token) navigate('/login')
     executeVerify()
   },[])
   return (
