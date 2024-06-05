@@ -78,6 +78,11 @@ const HorizontalLinearAlternativeLabelStepper = () => {
     if (activeStep === 0 && !formValues.botName) {
       errors.botName = 'Bot name is required';
     }
+    if (activeStep === 0 && !formValues.strategy) {
+      errors.strategy = 'Strategy name is required';
+    }if (activeStep === 0 && !formValues.parameters) {
+      errors.parameters = 'Parameter is required';
+    }
     if (activeStep === 1 && !formValues.strategy) {
       errors.strategy = 'Strategy name is required';
     }
@@ -94,15 +99,46 @@ const HorizontalLinearAlternativeLabelStepper = () => {
           <Box>
             <CustomTextField
               placeholder="Bot Name"
-              backgroundColor="#2A2A2A"
+              backgroundColor="transparent"
               textColor="#FFFFFF"
               type="text"
               id="search"
+              borderColor="#666262"
               name="botName"
               value={formValues.botName}
               onChange={handleChange}
               error={!!errors.botName}
               helperText={errors.botName}
+              fullWidth
+            />
+            <CustomTextField
+              placeholder="Strategy"
+              backgroundColor="transparent"
+              textColor="#FFFFFF"
+              type="text"
+              mt={1}
+              id="strategy"
+              borderColor="#666262"
+              name="strategy"
+              value={formValues.strategy}
+              onChange={handleChange}
+              error={!!errors.strategy}
+              helperText={errors.strategy}
+              fullWidth
+            />
+            <CustomTextField
+              placeholder="Parameter"
+              backgroundColor="transparent"
+              textColor="#FFFFFF"
+              type="text"
+              mt={1}
+              id="search"
+              borderColor="#666262"
+              name="parameters"
+              value={formValues.parameters}
+              onChange={handleChange}
+              error={!!errors.parameters}
+              helperText={errors.parameters}
               fullWidth
             />
           </Box>

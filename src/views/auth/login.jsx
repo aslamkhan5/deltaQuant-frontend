@@ -28,6 +28,7 @@ import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
 import { toast } from "react-toastify"
 import ReCAPTCHA from "react-google-recaptcha";
+import LogoContainer from "../../components/LogoContainer"
 const Login = () => {
   const recaptchaRef = React.createRef();
   const theme = useTheme();
@@ -87,9 +88,9 @@ const Login = () => {
     )
     if (formData.captcha) {
       if (isValid) {
-        // execute()
-        authenticate()
-        navigate("/dashboard")
+        execute()
+        // authenticate()
+        // navigate("/dashboard")
       }
 
     } else {
@@ -134,6 +135,7 @@ const Login = () => {
   return (
     <Container maxWidth="lg">
       <Grid container direction="column" height="100vh" className="main-wrapper" gap={2}>
+        <LogoContainer/>
         <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
           Sign in to your account
         </Typography>
@@ -236,12 +238,12 @@ const Login = () => {
             onChange={onChange}
           />
         </Grid>
-        
+
         {captchaError && (
-            <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-              Please fill Recaptcha to login
-            </Typography>
-          )}
+          <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+            Please fill Recaptcha to login
+          </Typography>
+        )}
       </Grid>
     </Container>
   )

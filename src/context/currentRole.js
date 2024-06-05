@@ -31,63 +31,63 @@ const RoleState = (props) => {
     return JSON.parse(window.atob(base64));
   }
 
-  useEffect(() => {
-    const roleString = localStorage.getItem("userRole");
-    const roles = JSON.parse(roleString) || [];
-    setCurrentRole(
-      roles?.includes("admin") ? "admin" : "test"
-    );
-    if (window.location.pathname === "/home") {
-      localStorage?.setItem("activeTab", "home");
-      setIsColor("home");
-    }
+  // useEffect(() => {
+  //   const roleString = localStorage.getItem("userRole");
+  //   const roles = JSON.parse(roleString) || [];
+  //   setCurrentRole(
+  //     roles?.includes("admin") ? "admin" : "test"
+  //   );
+  //   if (window.location.pathname === "/home") {
+  //     localStorage?.setItem("activeTab", "home");
+  //     setIsColor("home");
+  //   }
 
-    const params = new URLSearchParams(location.search);
-    if (params && params.size > 0) {
-      const googleToken = params.get("token");
-      params.delete("token");
-      const newSearch = params.toString();
-      const newUrl = `${location.pathname}${newSearch ? `?${newSearch}` : ""}`;
-      navigate(newUrl);
+  //   const params = new URLSearchParams(location.search);
+  //   if (params && params.size > 0) {
+  //     const googleToken = params.get("token");
+  //     params.delete("token");
+  //     const newSearch = params.toString();
+  //     const newUrl = `${location.pathname}${newSearch ? `?${newSearch}` : ""}`;
+  //     navigate(newUrl);
 
-      if (googleToken) {
-        const decoded = parseJwt(googleToken);
-        localStorage.setItem("token", googleToken);
-        localStorage.setItem("isLoggedIn", true);
-        if (decoded?.user?.role) {
-          setCurrentRole(
-            decoded?.user?.role?.includes("admin") ? "admin" : "test"
-          );
-        }
-      }
-      const token = localStorage.getItem("token");
-      if (token || googleToken) {
-        // const decodedAuthToken = jwtDecode(token || googleToken);
-        // if (isTokenExpired(decodedAuthToken.exp)) {
-        //   handleLogout();
-        // }
-      } else {
-        handleLogout();
-      }
-    } else {
-      if (token) {
-        // const decodedAuthToken = jwtDecode(token);
-        // if (isTokenExpired(decodedAuthToken.exp)) {
-        //   handleLogout();
-        // }
-      } else {
-        if (
-          window.location.pathname !== "/signup" &&
-          window.location.pathname !== "/reset-password" &&
-          window.location.pathname !== "/send-email" &&
-          window.location.pathname.includes("/verify-email") &&
-          window.location.pathname.includes("/update-password")
-        ) {
-          handleLogout();
-        }
-      }
-    }
-  }, []);
+  //     if (googleToken) {
+  //       const decoded = parseJwt(googleToken);
+  //       localStorage.setItem("token", googleToken);
+  //       localStorage.setItem("isLoggedIn", true);
+  //       if (decoded?.user?.role) {
+  //         setCurrentRole(
+  //           decoded?.user?.role?.includes("admin") ? "admin" : "test"
+  //         );
+  //       }
+  //     }
+  //     const token = localStorage.getItem("token");
+  //     if (token || googleToken) {
+  //       // const decodedAuthToken = jwtDecode(token || googleToken);
+  //       // if (isTokenExpired(decodedAuthToken.exp)) {
+  //       //   handleLogout();
+  //       // }
+  //     } else {
+  //       handleLogout();
+  //     }
+  //   } else {
+  //     if (token) {
+  //       // const decodedAuthToken = jwtDecode(token);
+  //       // if (isTokenExpired(decodedAuthToken.exp)) {
+  //       //   handleLogout();
+  //       // }
+  //     } else {
+  //       if (
+  //         window.location.pathname !== "/signup" &&
+  //         window.location.pathname !== "/reset-password" &&
+  //         window.location.pathname !== "/send-email" &&
+  //         window.location.pathname.includes("/verify-email") &&
+  //         window.location.pathname.includes("/update-password")
+  //       ) {
+  //         handleLogout();
+  //       }
+  //     }
+  //   }
+  // }, []);
 
 
   return (

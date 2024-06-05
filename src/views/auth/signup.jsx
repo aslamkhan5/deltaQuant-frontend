@@ -14,6 +14,7 @@ import PrimaryButton from "../../components/PrimaryButton"
 import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
 import { useAuth } from "../../context/authContext"
+import LogoContainer from "../../components/LogoContainer"
 
 const SignUp = () => {
   const theme = useTheme();
@@ -141,6 +142,7 @@ const SignUp = () => {
   return (
     <Container maxWidth="lg">
       <Grid container direction="column" className="main-wrapper" alignItems="center" gap={2}>
+      <LogoContainer/>
         <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
           Sign Up to your account
         </Typography>

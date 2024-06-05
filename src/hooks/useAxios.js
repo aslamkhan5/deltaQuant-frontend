@@ -77,7 +77,7 @@ export default function useAxios(
       })
       .catch((e) => {
         if (e?.response?.status === 401) {
-          toast.error(e?.response?.data?.error)
+          toast.error(e?.response?.data?.message)
           // console.log("Token is expired. Logging out");
           // Add your logic for handling expired tokens and logging out
         } else if (e?.response?.status === 422) {

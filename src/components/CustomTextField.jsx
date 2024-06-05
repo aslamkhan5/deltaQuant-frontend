@@ -1,19 +1,20 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const CustomTextField = ({ backgroundColor, textColor, ...props }) => {
+const CustomTextField = ({ backgroundColor, textColor, borderColor,mt, margin, ...props }) => {
   return (
     <TextField
-    //   variant="outlined"
+      //   variant="outlined"
       sx={{
         '& .MuiInputBase-root': {
           backgroundColor: backgroundColor,
-        //   borderRadius: 2,
-          color: textColor,
+          //   borderRadius: 2,
+          mt: mt,
+          color: textColor
         },
         '& .MuiOutlinedInput-root': {
           '& fieldset': {
-            // borderColor: 'rgba(0, 0, 0, 0.23)', // Default border color
+            borderColor: borderColor, // Default border color
           },
           '&:hover fieldset': {
             // borderColor: '#ff0000', // Hover border color

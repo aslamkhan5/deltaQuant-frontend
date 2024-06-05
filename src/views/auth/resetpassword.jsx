@@ -7,6 +7,8 @@ import { isValidEmail } from "../../helpers"
 import PrimaryButton from "../../components/PrimaryButton"
 import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
+import { login } from "../../routes/pathName"
+import LogoContainer from "../../components/LogoContainer"
 
 const ResetPassword = () => {
   const navigate = useNavigate()
@@ -15,7 +17,7 @@ const ResetPassword = () => {
   const [errors, setErrors] = useState({ email: "", captcha: "" })
   const [loading, setLoading] = useState(false)
   const [isEmailSent, setIsEmailSent] = useState(false)
-  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}v1/guest/forget-password`,'POST',formData)
+  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}/api/guest/forget-password`,'POST',formData)
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({
@@ -44,9 +46,9 @@ const ResetPassword = () => {
 
     if(validEmail && captchaValue) {
       // we will do this in success scenario of data?.status 
-      const encodedEmail = encodeURIComponent(formData?.email)
-      navigate(`/${encodedEmail}/update-password`)
-      // execute()
+      // const encodedEmail = encodeURIComponent(formData?.email)
+      // navigate(`/${encodedEmail}/update-password`)
+      execute()
     }
     // try {
     //   const response = await Api.getResetPasswordStatus(formData?.email)
@@ -64,7 +66,9 @@ const ResetPassword = () => {
 
   useEffect (()=> {
     if(data?.status) {
-      //handle success scenario here
+      navigate(login)
+    } else {
+      toast.error(data?.message || "Something wrongs!")
     }
   },[data])
 
@@ -101,6 +105,7 @@ const ResetPassword = () => {
   return (
     <Container maxWidth="lg">
       <Grid container direction="column" height="100vh" className="main-wrapper" alignItems="center" gap={2}>
+        <LogoContainer/>
             <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
             Reset your password
             </Typography>
@@ -141,10 +146,9 @@ const ResetPassword = () => {
             <Grid container justifyContent="center">
               <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
                 <PrimaryButton
-                  loading={apiState}
                   title="Back to Login"
-                  onClick={()=>navigate("/login")}
-                  variant="outlined"
+                  onClick={()=>navigate(login)}
+                  // variant="outlined"
                   backgroundColor="transparent"
                   textColor="white"
                 />
