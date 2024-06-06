@@ -175,7 +175,7 @@ const ConfirmPassword = () => {
         />
       ) : (
         <Container maxWidth="lg">
-          <Grid container direction="column" spacing={3} className="main-wrapper" height="100vh"  gap={2}>
+          <Grid container direction="column" className="main-wrapper">
             {/* <Grid item xs={12}>
               <Box display="flex" alignItems="center" gap={2}>
                 <Typography variant="h4" component="h1">
@@ -185,7 +185,7 @@ const ConfirmPassword = () => {
               </Box>
             </Grid> */}
             <LogoContainer/>
-            <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+            <Typography sx={{ fontWeight: "600", fontSize: 44,textAlign:"center" }} component="h1" color="#F8F8F8">
               Create New Password
             </Typography>
             <Typography

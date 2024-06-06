@@ -29,12 +29,14 @@ import { config } from "../../configs"
 import { toast } from "react-toastify"
 import ReCAPTCHA from "react-google-recaptcha";
 import LogoContainer from "../../components/LogoContainer"
+import { defaultSpacing } from "../../constants"
+import ValidationError from "../../components/ValidationError"
 const Login = () => {
   const recaptchaRef = React.createRef();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
-  const [captchaError, setCaptchError] = useState(false)
+  const [captchaError, setCaptchaError] = useState(false)
   const { authenticate } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -89,12 +91,13 @@ const Login = () => {
     if (formData.captcha) {
       if (isValid) {
         execute()
+        
         // authenticate()
         // navigate("/dashboard")
       }
 
     } else {
-      setCaptchError(true)
+      setCaptchaError(true)
     }
   }
 
@@ -119,6 +122,7 @@ const Login = () => {
       ...formData,
       captcha: value
     })
+    setCaptchaError(false)
   }
   useEffect(() => {
     // const timer = setTimeout(() => {
@@ -134,13 +138,13 @@ const Login = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container direction="column" height="100vh" className="main-wrapper" gap={2}>
-        <LogoContainer/>
-        <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+      <Grid container direction="column" className="main-wrapper">
+        <LogoContainer />
+        <Typography sx={{ fontWeight: "600", fontSize: 44, textAlign: "center" }} component="h1" color="#F8F8F8">
           Sign in to your account
         </Typography>
         <Typography
-          mb={2}
+          mb={defaultSpacing}
           color="#FFFFFF"
           sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
         >
@@ -148,7 +152,13 @@ const Login = () => {
           {!isXs && <br />}
           in a go with our easy to use dashboard
         </Typography>
-        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+        
+        <Grid container justifyContent="center"  sx={{ mb: defaultSpacing }}>
+          <Grid item>
+            {captchaError && <ValidationError error=" Please fill Recaptcha to login" />}
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <TextField
               fullWidth
@@ -165,7 +175,7 @@ const Login = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" sx={{ mb: 1 }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <PasswordInput
               type="password"
@@ -183,7 +193,7 @@ const Login = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex" alignItems="center">
@@ -220,7 +230,7 @@ const Login = () => {
                   </Typography>
                 </Grid>
               </Grid> */}
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
               Don’t have an account yet?
@@ -231,19 +241,20 @@ const Login = () => {
           </Grid>
         </Grid>
 
-        <Grid container justifyContent="center">
-          <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey="6LfO1O8pAAAAALLL4aoxMHUW7DF8GgpfdMVtxRvd"
-            onChange={onChange}
-          />
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
+          <Grid item>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LfO1O8pAAAAALLL4aoxMHUW7DF8GgpfdMVtxRvd"
+              onChange={onChange}
+            />
+          </Grid>
         </Grid>
-
-        {captchaError && (
+        {/* {captchaError && (
           <Typography variant="body2" color="error" sx={{ mt: 1 }}>
             Please fill Recaptcha to login
           </Typography>
-        )}
+        )} */}
       </Grid>
     </Container>
   )

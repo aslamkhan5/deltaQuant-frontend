@@ -5,9 +5,18 @@ import GenericBreadcrumbs from '../../components/GenericBreadCrumbs';
 import { bots } from '../../routes/pathName';
 import FilterButtonWithDrawer from '../../components/FilterButtonWithDrawer';
 import GenericModal from '../../components/GenericModal';
-import HorizontalLinearAlternativeLabelStepper from '../../components/HorizontalLinearAlternativeLabelStepper';
-
+import HorizontalLinearAlternativeLabelStepper from '../../components/Stepper/HorizontalLinearAlternativeLabelStepper';
+import stepsSchema from '../../constants/botSteps';
+import ActivateCheckbox from '../../components/ActivateCheckbox'
 const Bots = () => {
+  const steps = ['Overview', 'Entry', 'Exit'];
+  const [formValues, setFormValues] = useState({
+    botName: '',
+    strategy: '',
+    parameters: '',
+    entry: "",
+    exit: ""
+  });
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCreateBotModalOpen,setIsCreateBotModalOpen] = useState(false)
   const [createBotFormData, setCreateBotFormData] = useState(null)
@@ -49,13 +58,6 @@ const Bots = () => {
   ];
   return (
     <Fragment>
-      <Typography
-        mb={2}
-        color="#FFFFFF"
-        sx={{ fontWeight: 600, fontSize: 32 }}
-      >
-        Bot
-      </Typography>
       <Grid container justifyContent="space-between">
         <Grid item>
           <GenericBreadcrumbs breadcrumbs={breadcrumbItems} currentPath={bots} />
@@ -66,10 +68,15 @@ const Bots = () => {
           <Button sx={{ background: '#233228',mr:1 }} onClick={()=>setIsCreateBotModalOpen(true)}>Create Bot Model</Button>
           <FilterButtonWithDrawer toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
           <GenericModal open={isCreateBotModalOpen} handleClose={handleCreateBotClose} title="Create Bot" handleSubmit={handleBotSubmit}>
-            <HorizontalLinearAlternativeLabelStepper/>
+            <HorizontalLinearAlternativeLabelStepper 
+            handleClose={handleCreateBotClose}
+            stepsSchema={stepsSchema}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            />
           </GenericModal>
-          <GenericModal open={isActivateModalOpen} handleClose={handleActiveModalClose} title="Activate and Deactivate" handleSubmit={handleActivateSubmit}>
-            <Typography>No content currently</Typography>
+          <GenericModal open={isActivateModalOpen} handleClose={handleActiveModalClose} title="Activate and Deactivate" handleSubmit={handleActivateSubmit} contentBackground="black">
+            <ActivateCheckbox />
           </GenericModal>
         </Grid>
       </Grid>

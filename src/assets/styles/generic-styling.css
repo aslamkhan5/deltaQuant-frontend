@@ -8,9 +8,27 @@ body {
 .main-wrapper {
     justify-content: center;
     align-items: center;
-    margin-top: 'auto';
-    padding: 20px;
+    margin-top: 70px;
+    /* padding: 20px; */
     width: 100% !important;
-    height: 100vh;
+    /* height: 100vh; */
+    min-height: calc(100vh - 70px);
     background: black;
 }
+/* this styles scrollbar */
+.scrollContainer::-webkit-scrollbar {
+    width: 1px; /* width of the scrollbar */
+  }
+  
+  .scrollContainer::-webkit-scrollbar-track {
+    background: transparent; /* color of the track */
+  }
+  
+  .scrollContainer::-webkit-scrollbar-thumb {
+    background: #888; /* color of the thumb */
+    border-radius: 4px; /* roundness of the thumb */
+  }
+  
+  .scrollContainer::-webkit-scrollbar-thumb:hover {
+    background: #555; /* color of the thumb on hover */
+  }

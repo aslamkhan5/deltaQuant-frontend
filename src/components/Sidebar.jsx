@@ -6,6 +6,8 @@ import { styled } from '@mui/styles'
 import { sidebarElements } from '../constants/SidebarElements'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useAuth } from '../context/authContext'
+import UserProfile from './UserProfile'
+import { login } from '../routes/pathName'
 
 const SidebarContainer = styled('div')(({ theme }) => ({
   width: '200px',
@@ -45,21 +47,17 @@ const CustomElement = styled('div')({
   left: 0,
 })
 
-const LogoutButton = styled(Button)(({ theme }) => ({
-  margin: '20px',
-  color: '#ffffff',
-  backgroundColor: '#FF0000',
-  '&:hover': {
-    backgroundColor: '#FF4C4C',
-  },
-}))
 
 const Sidebar = () => {
   const location = useLocation()
-  const {logout} = useAuth()
+  const { logout } = useAuth()
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <SidebarContainer>
-      <List>
+      <List className='scrollContainer' style={{overflow:"auto"}}>
+        <UserProfile />
         {sidebarElements.map((item, index) => {
           const isActive = location.pathname === `/${item.title.toLowerCase()}`
           return (
@@ -79,17 +77,17 @@ const Sidebar = () => {
           )
         })}
       </List>
-      <LogoutButton
-        startIcon={<LogoutIcon />}
-        onClick={() => {
-          // Add your logout logic here
-          console.log('Logging out')
-          logout()
-          localStorage.clear()
-        }}
+      
+      <SidebarLink
+        onClick={handleLogout}
       >
-        Logout
-      </LogoutButton>
+        <ListItem button>
+          <CustomListItemIcon>
+            <LogoutIcon />
+          </CustomListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
+      </SidebarLink>
     </SidebarContainer>
   )
 }

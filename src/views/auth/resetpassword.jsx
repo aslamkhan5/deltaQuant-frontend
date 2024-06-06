@@ -9,6 +9,7 @@ import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
 import { login } from "../../routes/pathName"
 import LogoContainer from "../../components/LogoContainer"
+import { defaultSpacing } from "../../constants"
 
 const ResetPassword = () => {
   const navigate = useNavigate()
@@ -65,10 +66,12 @@ const ResetPassword = () => {
   }
 
   useEffect (()=> {
-    if(data?.status) {
-      navigate(login)
-    } else {
-      toast.error(data?.message || "Something wrongs!")
+    if(data) {
+      if(data?.status) {
+        navigate(login)
+      } else {
+        toast.error(data?.message || "Something wrongs!")
+      }
     }
   },[data])
 
@@ -104,9 +107,9 @@ const ResetPassword = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container direction="column" height="100vh" className="main-wrapper" alignItems="center" gap={2}>
+      <Grid container direction="column" height="100vh" className="main-wrapper" alignItems="center">
         <LogoContainer/>
-            <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+            <Typography sx={{ fontWeight: "600", fontSize: 44,textAlign:"center" }} component="h1" color="#F8F8F8">
             Reset your password
             </Typography>
             <Typography
@@ -116,7 +119,7 @@ const ResetPassword = () => {
             >
               Type in your registered email address to reset password
             </Typography>
-            <Grid container justifyContent="center" sx={{ mb: 2 }}>
+            <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
               <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
                 <TextField
                   fullWidth
@@ -133,7 +136,7 @@ const ResetPassword = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container justifyContent="center">
+            <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
               <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
                 <PrimaryButton
                   loading={apiState}

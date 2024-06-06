@@ -15,6 +15,7 @@ import useAxios from "../../hooks/useAxios"
 import { config } from "../../configs"
 import { useAuth } from "../../context/authContext"
 import LogoContainer from "../../components/LogoContainer"
+import { defaultSpacing } from "../../constants"
 
 const SignUp = () => {
   const theme = useTheme();
@@ -27,7 +28,7 @@ const SignUp = () => {
   })
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
-  const {apiState,data,error,execute} = useAxios(`${config.ApiBaseURL}/api/guest/register`,'POST',formData)
+  const { apiState, data, error, execute } = useAxios(`${config.ApiBaseURL}/api/guest/register`, 'POST', formData)
   const [captchaValue, setCaptchaValue] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const { authenticate } = useAuth()
@@ -84,14 +85,14 @@ const SignUp = () => {
     setErrors(newErrors)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (data?.status) {
       localStorage.setItem("token", data.token)
       toast.success(data.message)
       authenticate()
       navigate("/dashboard")
     }
-  },[data])
+  }, [data])
   const handleSignUp = async (e) => {
     e.preventDefault()
     const isValid = validateForm(
@@ -141,21 +142,21 @@ const SignUp = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container direction="column" className="main-wrapper" alignItems="center" gap={2}>
-      <LogoContainer/>
-        <Typography sx={{ fontWeight: "600", fontSize: 44 }} component="h1" color="#F8F8F8">
+      <Grid container direction="column" className="main-wrapper" alignItems="center">
+        <LogoContainer />
+        <Typography sx={{ fontWeight: "600", fontSize: 44,textAlign:"center" }} component="h1" color="#F8F8F8">
           Sign Up to your account
         </Typography>
         <Typography
-            mb={2}
-            color="#FFFFFF"
-            sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
-          >
-            Sign up to trace account to start managing your inventory
-            {!isXs && <br />}
-            in a go with our easy to use dashboard
-          </Typography>
-        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+          mb={2}
+          color="#FFFFFF"
+          sx={{ fontWeight: 400, fontSize: 16, textAlign: 'center' }}
+        >
+          Sign up to trace account to start managing your inventory
+          {!isXs && <br />}
+          in a go with our easy to use dashboard
+        </Typography>
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <TextField
               fullWidth
@@ -170,7 +171,7 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <TextField
               fullWidth
@@ -185,7 +186,7 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center" sx={{ mb: 2 }}>
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <TextField
               fullWidth
@@ -203,7 +204,7 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <PasswordInput
               type="password"
@@ -221,7 +222,7 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" sx={{ mb: defaultSpacing }}>
           <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
             <Box display="flex" alignItems="center">
               <Checkbox
@@ -251,9 +252,9 @@ const SignUp = () => {
             />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center">
-          <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-            <Typography variant="body2" align="center" sx={{ color: "white", mt: 3 }}>
+        <Grid container justifyContent="center"  sx={{ mb: defaultSpacing,mt:defaultSpacing }}>
+          <Grid item xs={12} sm={12} md={8} lg={6} xl={6} >
+            <Typography variant="body2" align="center" sx={{ color: "white" }}>
               Already have an account?
               <MuiLink component={Link} to="/login" color="primary">
                 &nbsp;Login
