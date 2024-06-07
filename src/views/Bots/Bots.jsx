@@ -32,8 +32,8 @@ const Bots = () => {
     { text: 'Home', href: '/' },
     { text: 'Bots', href: bots },
   ];
-  function createData(bot, status, entry, exit) {
-    return { bot, status, entry, exit };
+  function createData(bot, status, entry, exit,id) {
+    return { bot, status, entry, exit,id };
   }
   const handleCreateBotClose = () => {
     setIsCreateBotModalOpen(false)
@@ -50,11 +50,14 @@ const Bots = () => {
 
   }
   const rows = [
-    createData('Premium', 'Premium', 'Premium', '--'),
-    createData('Premium', 'Premium', 'Premium', '--'),
-    createData('Premium', 'Premium', 'Premium', '--'),
-    createData('Premium', 'Premium', 'Premium', '--'),
-    createData('Premium', 'Premium', 'Premium', '--'),
+    createData('Premium', 'Premium', 'Premium', '--',1),
+    createData('Premium', 'Premium', 'Premium', '--',2),
+    createData('Premium', 'Premium', 'Premium', '--',3),
+    createData('Premium', 'Premium', 'Premium', '--',4),
+    createData('Premium', 'Premium', 'Premium', '--',5),
+    createData('Premium', 'Premium', 'Premium', '--',6),
+    createData('Premium', 'Premium', 'Premium', '--',7),
+    createData('Premium', 'Premium', 'Premium', '--',8),
   ];
   return (
     <Fragment>

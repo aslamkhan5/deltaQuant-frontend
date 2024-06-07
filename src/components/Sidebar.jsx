@@ -11,7 +11,7 @@ import { login } from '../routes/pathName'
 
 const SidebarContainer = styled('div')(({ theme }) => ({
   width: '200px',
-  backgroundColor: '#233228',
+  backgroundColor: '#181818',
   // height: '100vh',
   padding: '20px 0',
   boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
