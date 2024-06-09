@@ -20,7 +20,7 @@ const rows = [
 
 export default function PositionTable() {
     return (
-        <TableContainer component={Paper} sx={{mb:defaultSpacing}}>
+        <TableContainer component={Paper} sx={{mb:defaultSpacing,background:"#1e1e1e"}}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>

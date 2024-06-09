@@ -71,11 +71,13 @@ export default function useAxios(
     createAxiosRequest(url, method, payload, authorizationToken, customHeaders, queryParams)
       .then((res) => {
         if (res) {
+          console.log('000000000000')
           setData(res);
           setError(null);
         }
       })
       .catch((e) => {
+        console.log('999999999999')
         if (e?.response?.status === 401) {
           toast.error(e?.response?.data?.message)
           // console.log("Token is expired. Logging out");
@@ -84,14 +86,14 @@ export default function useAxios(
           setData(null);
           console.log('e is',e)
           toast.error(getFirstError(e?.response?.data.errors))
-          setError(e?.response ? e?.response?.data : e?.message);
+          setError(e?.response ? e?.response?.data?.message : e?.message);
           console.log('errors', e?.errors);
           console.log('Error:', e.message);
         } else {
           setData(null);
           setError(e?.response ? e?.response?.data : e?.message);
           console.log('Error:', e.message);
-          toast.error(e?.response ? e?.response?.data : e?.message)
+          toast.error(e?.response ? e?.response?.data?.message : e?.message)
           console.log('into error', e?.response ? e?.response?.data?.error : e?.message);
         }
       })

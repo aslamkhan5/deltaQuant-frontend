@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment,useState, useRef } from "react";
+import React, { useEffect, Fragment, useState, useRef } from "react";
 import { Typography } from "@mui/material";
 import PositionTable from "./PositionTable";
 import AnalyticsCard from "./AnalyticsCard";
@@ -10,46 +10,46 @@ import useAxios from "../../hooks/useAxios";
 import CandleStick from "../../components/Graphs/CandleStick";
 
 const Dashboard = () => {
-  const {apiState,data,error,execute} = useAxios('https://canvasjs.com/data/gallery/react/microsoft-stock-price.json','GET')
+  const { apiState, data, error, execute } = useAxios('https://canvasjs.com/data/gallery/react/microsoft-stock-price.json', 'GET')
   const chartRef = useRef(null);
   const [graphsData, setGraphsData] = useState([]);
-//   const [options, setOptions] = useState({
-//     exportEnabled: true,
-//     title: {
-//         text: "Whispertrades stock price 2024"
-//     },
-//     axisX: {
-//         valueFormatString: "D MMM"
-//     },
-//     axisY: {
-//         title: "Price",
-//         prefix: "$"
-//     },
-//     data: [{
-//         type: "candlestick",
-//         name: "Whispertrades Corporation Price",
-//         showInLegend: true,
-//         yValueFormatString: "$##0.00",
-//         xValueType: "dateTime",
-//         dataPoints: [],
-//         risingColor:"green",
-//         fallingColor:"red"
-//     }]
-// });
-const [options, setOptions] = useState({
-  exportEnabled: true,
-  backgroundColor: "#2e2e2e", // Dark background
-  title: {
+  //   const [options, setOptions] = useState({
+  //     exportEnabled: true,
+  //     title: {
+  //         text: "Whispertrades stock price 2024"
+  //     },
+  //     axisX: {
+  //         valueFormatString: "D MMM"
+  //     },
+  //     axisY: {
+  //         title: "Price",
+  //         prefix: "$"
+  //     },
+  //     data: [{
+  //         type: "candlestick",
+  //         name: "Whispertrades Corporation Price",
+  //         showInLegend: true,
+  //         yValueFormatString: "$##0.00",
+  //         xValueType: "dateTime",
+  //         dataPoints: [],
+  //         risingColor:"green",
+  //         fallingColor:"red"
+  //     }]
+  // });
+  const [options, setOptions] = useState({
+    exportEnabled: true,
+    backgroundColor: "#1e1e1e", // Dark background
+    title: {
       text: "Whispertrades stock price 2024",
       fontColor: "#ffffff" // Title color
-  },
-  axisX: {
+    },
+    axisX: {
       valueFormatString: "D MMM",
       labelFontColor: "#ffffff", // X-axis label color
       lineColor: "#ffffff", // X-axis line color
       tickColor: "#ffffff" // X-axis tick color
-  },
-  axisY: {
+    },
+    axisY: {
       title: "Price",
       prefix: "$",
       titleFontColor: "#ffffff", // Y-axis title color
@@ -57,23 +57,23 @@ const [options, setOptions] = useState({
       lineColor: "#ffffff", // Y-axis line color
       tickColor: "#ffffff", // Y-axis tick color
       gridColor: "#444444" // Y-axis grid color
-  },
-  data: [{
+    },
+    data: [{
       type: "candlestick",
       name: "Whispertrades Corporation Price",
       showInLegend: true,
       yValueFormatString: "$##0.00",
       xValueType: "dateTime",
       dataPoints: [],
-      risingColor: "lime",  // Color for the rising candles
-      fallingColor: "red",  // Color for the falling candles
-      color: "#ffffff" // Color for the candlestick borders
-  }],
-  legend: {
+      risingColor: "#2EBD85",  // Color for the rising candles
+      fallingColor: "#F6465D",  // Color for the falling candles
+      // borderThickness:10, // Border Thickness
+    }],
+    legend: {
       fontColor: "#ffffff" // Legend text color
-  }
-});  
-const breadcrumbItems = [
+    }
+  });
+  const breadcrumbItems = [
     { text: 'Home', href: '/' },
     { text: 'Dashboard', href: dashboard },
   ];
@@ -144,24 +144,24 @@ const breadcrumbItems = [
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  useEffect(()=>{
-    if(data) {
-      console.log('original',data)
+  useEffect(() => {
+    if (data) {
       const dataPoints = data.map(point => ({
         x: point.x,
-        y: point.y
-    }));
-    setGraphsData(dataPoints);
+        y: point.y,
+        color: point.y[0] <= point.y[3] ? "#2EBD85" : "#F6465D",
+      }));
+      setGraphsData(dataPoints);
 
-    setOptions(prevOptions => ({
+      setOptions(prevOptions => ({
         ...prevOptions,
         data: [{
-            ...prevOptions.data[0],
-            dataPoints: dataPoints
+          ...prevOptions.data[0],
+          dataPoints: dataPoints,
         }]
-    }));
+      }));
     }
-  },[data])
+  }, [data])
   return (
     <Fragment>
       <Typography
@@ -171,9 +171,9 @@ const breadcrumbItems = [
       >
         Dashboard
       </Typography>
-      <GenericBreadcrumbs breadcrumbs={breadcrumbItems} currentPath={dashboard}/>
+      <GenericBreadcrumbs breadcrumbs={breadcrumbItems} currentPath={dashboard} />
       <AnalyticsCard data={cardData} />
-      <CandleStick options={options} data={graphsData} onRef={ref => chartRef.current = ref}/>
+      <CandleStick options={options} data={graphsData} onRef={ref => chartRef.current = ref} />
       <Typography
         mb={2}
         color="#FFFFFF"

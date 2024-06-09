@@ -9,16 +9,16 @@ const Position = () => {
     { text: 'Home', href: '/' },
     { text: 'Position', href: position },
   ];
-  function createData(bot, position, entry, exit, pl) {
-    return { bot, position, entry, exit, pl };
+  function createData(bot, position, entry, exit, pl,id) {
+    return { bot, position, entry, exit, pl,id };
   }
   
   const rows = [
-    createData('Premium', 'Premium', 'Premium', '--','Premium'),
-    createData('Premium', 'Premium', 'Premium', '--','Premium'),
-    createData('Premium', 'Premium', 'Premium', '--','Premium'),
-    createData('Premium', 'Premium', 'Premium', '--','Premium'),
-    createData('Premium', 'Premium', 'Premium', '--','Premium'),
+    createData('Premium', 'Premium', 'Premium', '--','Premium',1),
+    createData('Premium', 'Premium', 'Premium', '--','Premium',2),
+    createData('Premium', 'Premium', 'Premium', '--','Premium',3),
+    createData('Premium', 'Premium', 'Premium', '--','Premium',4),
+    createData('Premium', 'Premium', 'Premium', '--','Premium',5),
   ];
   return (
     <Fragment>

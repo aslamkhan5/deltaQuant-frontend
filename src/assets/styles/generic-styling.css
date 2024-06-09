@@ -32,3 +32,17 @@ body {
   .scrollContainer::-webkit-scrollbar-thumb:hover {
     background: #555; /* color of the thumb on hover */
   }
+
+  /* this will avoid suggestions background change in inputs */
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: inherit !important;
+  }
+  
+  input:-moz-autofill {
+    background-color: transparent !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+    -moz-text-fill-color: inherit !important;
+  }
+  

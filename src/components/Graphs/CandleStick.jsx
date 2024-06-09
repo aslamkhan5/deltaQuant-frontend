@@ -14,7 +14,7 @@ const CandleStick = ({ options, data, onRef }) => {
     }, [data]);
 
     return (
-        <div>
+        <div style={{marginBottom:"32px"}}>
             <CanvasJSChart options={options} onRef={ref => {
                 chartRef.current = ref;
                 if (onRef) onRef(ref);

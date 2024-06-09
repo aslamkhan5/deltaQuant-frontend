@@ -19,7 +19,7 @@ const rows = [
 
 export default function WorkingOrders() {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{background:"#1e1e1e"}}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>

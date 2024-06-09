@@ -68,6 +68,7 @@ const ResetPassword = () => {
   useEffect (()=> {
     if(data) {
       if(data?.status) {
+        toast.success(data?.message)
         navigate(login)
       } else {
         toast.error(data?.message || "Something wrongs!")

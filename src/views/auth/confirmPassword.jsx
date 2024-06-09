@@ -145,11 +145,11 @@ const ConfirmPassword = () => {
     }
   },[dataVerify])
 
-  // useEffect (()=> {
-  //   if(errorVerify) {
-  //     navigate('/login')
-  //   }
-  // },[errorVerify])
+  useEffect (()=> {
+    if(errorVerify) {
+      navigate('/login')
+    }
+  },[errorVerify])
 
   useEffect (() => {
     if(!email || !token) navigate('/login')

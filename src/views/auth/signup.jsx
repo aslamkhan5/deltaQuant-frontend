@@ -87,10 +87,8 @@ const SignUp = () => {
 
   useEffect(() => {
     if (data?.status) {
-      localStorage.setItem("token", data.token)
-      toast.success(data.message)
-      authenticate()
-      navigate("/dashboard")
+      toast.success("Successfully register please check your email!")
+      navigate("/login")
     }
   }, [data])
   const handleSignUp = async (e) => {

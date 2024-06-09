@@ -61,6 +61,13 @@ const Bots = () => {
   ];
   return (
     <Fragment>
+      <Typography
+        mb={2}
+        color="#FFFFFF"
+        sx={{ fontWeight: 600, fontSize: 32 }}
+      >
+        Bots
+      </Typography>
       <Grid container justifyContent="space-between">
         <Grid item>
           <GenericBreadcrumbs breadcrumbs={breadcrumbItems} currentPath={bots} />
