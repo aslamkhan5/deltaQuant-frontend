@@ -71,13 +71,11 @@ export default function useAxios(
     createAxiosRequest(url, method, payload, authorizationToken, customHeaders, queryParams)
       .then((res) => {
         if (res) {
-          console.log('000000000000')
           setData(res);
           setError(null);
         }
       })
       .catch((e) => {
-        console.log('999999999999')
         if (e?.response?.status === 401) {
           toast.error(e?.response?.data?.message)
           // console.log("Token is expired. Logging out");
