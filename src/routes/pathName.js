@@ -14,6 +14,8 @@ const backtests = "/backtests";
 const balance = "/balance";
 const broker = "/broker";
 const guide = "/guide";
+const botEntry = "/bot-entry";
+const connection = "/connection"
 
 export {
   signup,
@@ -31,5 +33,7 @@ export {
   backtests,
   balance,
   broker,
-  guide
+  guide,
+  botEntry,
+  connection
 };

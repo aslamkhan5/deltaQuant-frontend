@@ -8,6 +8,8 @@ import LabelIcon from '@mui/icons-material/Label';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import BadgeIcon from '@mui/icons-material/Badge';
+import HubIcon from '@mui/icons-material/Hub';
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 export const sidebarElements  = [
   {
     title: "Dashboard",
@@ -16,6 +18,14 @@ export const sidebarElements  = [
   {
     title: "Bots",
     icon: AnchorIcon,
+  },
+  {
+    title: "Bot Entry",
+    icon: SettingsAccessibilityIcon,
+  },
+  {
+    title: "Connection",
+    icon: HubIcon,
   },
   {
     title: "Position",

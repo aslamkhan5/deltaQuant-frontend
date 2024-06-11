@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Button, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const GenericModal = ({ open, handleClose, handleSubmit, title, children,contentBackground="#565555",showActionButton=false }) => {
+const GenericModal = ({ open, handleClose, handleSubmit, title, children,contentBackground="#121212",showActionButton=false }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between',background:"black", alignItems: 'center' }}>

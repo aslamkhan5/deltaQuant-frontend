@@ -11,7 +11,9 @@ import { login } from '../routes/pathName'
 
 const SidebarContainer = styled('div')(({ theme }) => ({
   width: '200px',
-  backgroundColor: '#233228',
+  // backgroundColor: '#233228',
+  backgroundColor: '#202020',
+
   // height: '100vh',
   padding: '20px 0',
   boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
@@ -28,6 +30,7 @@ const SidebarLink = styled(Link)(({ theme }) => ({
   alignItems: 'center',
   '&.active': {
     color: '#57D57B',
+    background:"#233228"
   },
 }))
 
@@ -49,6 +52,7 @@ const CustomElement = styled('div')({
 
 
 const Sidebar = () => {
+  const formatTitleToUrl = (title) => title.toLowerCase().replace(/\s+/g, '-');
   const location = useLocation()
   const { logout } = useAuth()
   const handleLogout = () => {
@@ -59,10 +63,10 @@ const Sidebar = () => {
       <List className='scrollContainer' style={{overflow:"auto"}}>
         <UserProfile />
         {sidebarElements.map((item, index) => {
-          const isActive = location.pathname === `/${item.title.toLowerCase()}`
+          const isActive = location.pathname === `/${formatTitleToUrl(item.title)}`
           return (
             <SidebarLink
-              to={`/${item.title.toLowerCase()}`}
+              to={`/${formatTitleToUrl(item.title)}`}
               key={index}
               className={isActive ? 'active' : ''}
             >

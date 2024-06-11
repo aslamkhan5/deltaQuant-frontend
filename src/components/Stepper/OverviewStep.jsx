@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import CustomTextField from "../CustomTextField";
 import { defaultSpacing } from "../../constants";
 
-const OverviewStep = ({ botName, strategy, parameters, entry, exit, handleChange, errors }) => (
+const OverviewStep = ({ botName, strategy, parameters, handleChange, errors }) => (
     <Box>
       <CustomTextField
         placeholder="Bot Name"
