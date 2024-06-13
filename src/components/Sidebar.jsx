@@ -10,7 +10,7 @@ import UserProfile from './UserProfile'
 import { login } from '../routes/pathName'
 
 const SidebarContainer = styled('div')(({ theme }) => ({
-  width: '300px',
+  width: '200px',
   // backgroundColor: '#233228',
   backgroundColor: '#202020',
 
