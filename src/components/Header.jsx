@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
-import { logo } from "../utils/images";
+import logo from '../assets/images/logo-with-icon.png'
 import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@mui/icons-material/Menu';
 import CustomTextField from "./CustomTextField";
@@ -12,10 +12,9 @@ const Header = ({ toggleSidebar }) => {
       <Grid item>
         <Box
           component="img"
-          // sx={{
-          //   height: 50,
-          //   width: 150,
-          // }}
+          sx={{
+            height: 60
+          }}
           alt="Logo"
           src={logo}
         />

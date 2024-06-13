@@ -46,14 +46,14 @@ const ClippedText = styled('div')({
 const UserProfile = ({ user }) => {
   return (
     <ProfileContainer>
-      <ProfilePicture>
+      {/* <ProfilePicture>
         <ProfileImage 
         src={userImage}
         alt='User Image'
         // src={user.imagePath}
         // alt={`${user.name}'s profile`} 
         />
-      </ProfilePicture>
+      </ProfilePicture> */}
       <ProfileDetails>
         <ClippedText style={{color:"#57D57B",fontSize:"24px",fontWeight:"500"}}>
           Jack Smith

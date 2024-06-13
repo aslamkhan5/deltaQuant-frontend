@@ -60,25 +60,25 @@ export default function BrokerTable({ rows }) {
     { field: 'status', headerName: 'Status', flex: 1 },
     { field: 'availableBalance', headerName: 'Available Balance', flex: 1 },
     { field: 'buyingOption', headerName: 'Buying Option', flex: 1 },
-    {
-      field: 'actions',
-      headerName: 'Status',
-      flex: 1,
-      renderCell: (params) => (
-        <>
-          <Tooltip title="Delete">
-            <IconButton onClick={() => handleDelete(params.row)}>
-              <DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <IconButton onClick={() => handleEdit(params.row)}>
-              <DriveFileRenameOutlineIcon sx={{ color: 'white', cursor: 'pointer' }} />
-            </IconButton>
-          </Tooltip>
-        </>
-      ),
-    },
+    // {
+    //   field: 'actions',
+    //   headerName: 'Status',
+    //   flex: 1,
+    //   renderCell: (params) => (
+    //     <>
+    //       <Tooltip title="Delete">
+    //         <IconButton onClick={() => handleDelete(params.row)}>
+    //           <DeleteIcon sx={{ color: 'red', cursor: 'pointer' }} />
+    //         </IconButton>
+    //       </Tooltip>
+    //       <Tooltip title="Edit">
+    //         <IconButton onClick={() => handleEdit(params.row)}>
+    //           <DriveFileRenameOutlineIcon sx={{ color: 'white', cursor: 'pointer' }} />
+    //         </IconButton>
+    //       </Tooltip>
+    //     </>
+    //   ),
+    // },
   ]
 
   const handleDelete = (row) => {
