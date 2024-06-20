@@ -40,7 +40,7 @@ const Dashboard = () => {
     exportEnabled: true,
     backgroundColor: "#1e1e1e", // Dark background
     title: {
-      text: "Whispertrades stock price 2024",
+      text: "Delta Quant stock price 2024",
       fontColor: "#ffffff" // Title color
     },
     axisX: {
@@ -60,7 +60,7 @@ const Dashboard = () => {
     },
     data: [{
       type: "candlestick",
-      name: "Whispertrades Corporation Price",
+      name: "Delta Quant Corporation Price",
       showInLegend: true,
       yValueFormatString: "$##0.00",
       xValueType: "dateTime",

@@ -43,20 +43,20 @@ export const sidebarElements  = [
     title: "Reports",
     icon: AssessmentIcon,
   },
-  {
-    title: "Backtests",
-    icon: LabelIcon,
-  },
-  {
-    title: "Balance",
-    icon: QueryStatsIcon,
-  },
+  // {
+  //   title: "Backtests",
+  //   icon: LabelIcon,
+  // },
+  // {
+  //   title: "Balance",
+  //   icon: QueryStatsIcon,
+  // },
   {
     title: "Broker",
     icon: BarChartIcon,
   },
-  {
-    title: "Guide",
-    icon: BadgeIcon,
-  }
+  // {
+  //   title: "Guide",
+  //   icon: BadgeIcon,
+  // }
 ];

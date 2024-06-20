@@ -36,7 +36,7 @@ const DataSummaryGraph = () => {
         zoomEnabled: true,
         animationEnabled: true,
         title: {
-            text: "Whisper Traders Stock Rates",
+            text: "Delta Quant Stock Rates",
             fontColor: "#ffffff"
         },
         axisX: {

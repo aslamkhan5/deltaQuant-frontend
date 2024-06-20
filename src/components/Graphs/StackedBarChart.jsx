@@ -20,7 +20,7 @@ const StackedBarChart = () => {
         exportEnabled: true,
         backgroundColor: "#1e1e1e",
         title: {
-            text: "Operating Expenses of Whisper Traders",
+            text: "Operating Expenses of Delta Quant",
             fontFamily: "verdana",
             fontColor: "#ffffff"
         },
